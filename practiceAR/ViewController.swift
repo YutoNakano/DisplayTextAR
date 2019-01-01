@@ -20,14 +20,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the view's delegate
         sceneView.delegate = self
         
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        let text = SCNText(string: "謹賀新年", extrusionDepth: 10)
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+//        画数多い文字
+//        龗鱻麤籲龖厵韊鸝纞讟钃钄鸜
         
-        // Set the scene to the view
-        sceneView.scene = scene
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.red
+        
+        text.materials = [material]
+        
+        let node = SCNNode()
+        node.position = SCNVector3(0, 0.02, -0.2)
+        node.scale = SCNVector3(0.05, 0.05, 0.05)
+        node.geometry = text
+        
+        sceneView.scene.rootNode.addChildNode(node)
+        sceneView.autoenablesDefaultLighting = true
+        
+        
+        
+
+
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,16 +62,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
-    // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
